@@ -1,10 +1,14 @@
-const App = () => (
-    <>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque voluptate
-        neque dignissimos a, laudantium temporibus doloribus vero vitae aut
-        quibusdam veritatis placeat. Dolore, dicta qui adipisci enim cumque non
-        ut?
-    </>
-)
+import Button from '@mui/material/Button'
+import { useTheme } from './contexts/ThemeContext'
+
+const App = () => {
+    const { toggleTheme } = useTheme()
+
+    return (
+        <Button variant="contained" onClick={toggleTheme} sx={{ m: 4 }}>
+            Toggle Theme
+        </Button>
+    )
+}
 
 export default App
