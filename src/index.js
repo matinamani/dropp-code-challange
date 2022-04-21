@@ -5,14 +5,16 @@ import './index.css'
 import App from './App'
 import ThemeProvider from './contexts/ThemeContext'
 import Layout from './components/Layout'
+import Login from './pages/Login'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 const UiContainer = () => (
     <ThemeProvider>
-        <Layout>
+        {/* <Layout>
             <App />
-        </Layout>
+        </Layout> */}
+        <Login />
     </ThemeProvider>
 )
 
