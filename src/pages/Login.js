@@ -4,24 +4,21 @@ import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
+
+import axios from 'axios'
 
 import { useLocalStorage, useInput } from '../helpers/hooks'
-
-const data = {
-    SING_UP: {
-        header: 'Sign Up',
-        Button: 'Sign Up',
-        caption: 'Already have an account?',
-    },
-    LOGIN: {
-        header: 'Login',
-        Button: 'Login',
-        caption: "Don't have an account?",
-    },
-}
+import { LOGIN_DATA, ERROR_MSG } from '../constants'
 
 const Login = () => {
+    const [loading, setLoading] = useState(false)
     const [signUp, setSignUp] = useState(false)
+    const [error, setError] = useState({
+        username: '',
+        password: '',
+        confirm: '',
+    })
 
     useEffect(() => {
         clearForm()
@@ -35,7 +32,21 @@ const Login = () => {
 
     const handleLogin = () => {}
 
-    const handleSignUp = () => {}
+    const handleSignUp = async () => {
+        setLoading(true)
+
+        if (form.password.value === form.confirm.value) {
+            const data = {
+                username: form.username.value,
+                password: form.password.value,
+            }
+            await axios.post('http://localhost:3000/users', data)
+        } else {
+            setError({ ...error, confirm: ERROR_MSG.CONFIRM })
+        }
+
+        setLoading(false)
+    }
 
     const clearForm = () => {
         form.username.clearInput()
@@ -63,40 +74,72 @@ const Login = () => {
                 }}
             >
                 <Typography variant="h4" align="center" paragraph>
-                    {signUp ? data.SING_UP.header : data.LOGIN.header}
+                    {signUp
+                        ? LOGIN_DATA.SING_UP.header
+                        : LOGIN_DATA.LOGIN.header}
                 </Typography>
                 <TextField
                     sx={{ my: 1 }}
                     variant="standard"
                     label="Username"
                     fullWidth
+                    error={error.username && true}
                     {...form.username}
                 />
+                {error.username && (
+                    <Typography variant="caption" color="error">
+                        {error.username}
+                    </Typography>
+                )}
                 <TextField
                     sx={{ my: 1 }}
                     variant="standard"
                     label="Password"
+                    type="password"
                     fullWidth
+                    error={error.password && true}
                     {...form.password}
                 />
-                {signUp && (
-                    <TextField
-                        sx={{ my: 1 }}
-                        variant="standard"
-                        label="Confirm Password"
-                        fullWidth
-                        {...form.confirm}
-                    />
+                {error.password && (
+                    <Typography variant="caption" color="error">
+                        {error.password}
+                    </Typography>
                 )}
-                <Button
-                    sx={{ m: 2 }}
-                    variant="contained"
-                    onClick={signUp ? handleSignUp : handleLogin}
-                >
-                    {signUp ? data.SING_UP.Button : data.LOGIN.Button}
-                </Button>
+                {signUp && (
+                    <>
+                        <TextField
+                            sx={{ my: 1 }}
+                            variant="standard"
+                            label="Confirm Password"
+                            type="password"
+                            fullWidth
+                            error={error.confirm && true}
+                            {...form.confirm}
+                        />
+                        {error.confirm && (
+                            <Typography variant="caption" color="error">
+                                {error.confirm}
+                            </Typography>
+                        )}
+                    </>
+                )}
+                {loading ? (
+                    <CircularProgress />
+                ) : (
+                    <Button
+                        sx={{ m: 2 }}
+                        variant="contained"
+                        onClick={signUp ? handleSignUp : handleLogin}
+                    >
+                        {signUp
+                            ? LOGIN_DATA.SING_UP.Button
+                            : LOGIN_DATA.LOGIN.Button}
+                    </Button>
+                )}
                 <Typography variant="caption">
-                    {signUp ? data.SING_UP.caption : data.LOGIN.caption}
+                    {signUp
+                        ? LOGIN_DATA.SING_UP.caption
+                        : LOGIN_DATA.LOGIN.caption}
                 </Typography>
                 <Typography
                     sx={{ textDecoration: 'underline', cursor: 'pointer' }}
