@@ -37,29 +37,31 @@ const Login = () => {
 }
 
 const LoginCaption = ({ onClick }) => (
-    <Typography variant="caption">
-        Already Have an Account?{' '}
+    <>
+        <Typography variant="caption">Already Have an Account?</Typography>
         <Typography
+            variant="caption"
             onClick={onClick}
             sx={{ textDecoration: 'underline', cursor: 'pointer' }}
             align="center"
         >
             Login
         </Typography>
-    </Typography>
+    </>
 )
 
 const SignUpCaption = ({ onClick }) => (
-    <Typography variant="caption">
-        Don't Have an Account?{' '}
+    <>
+        <Typography variant="caption">Don't Have an Account?</Typography>
         <Typography
+            variant="caption"
             onClick={onClick}
             sx={{ textDecoration: 'underline', cursor: 'pointer' }}
             align="center"
         >
             SignUp
         </Typography>
-    </Typography>
+    </>
 )
 
 export default Login
