@@ -1,12 +1,5 @@
-const App = () => {
-    return (
-        <>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis
-            ratione accusantium placeat obcaecati? Expedita non repellendus
-            labore ea, eveniet, amet dolor deleniti tenetur quis nisi placeat.
-            Nulla eveniet facilis voluptatum?
-        </>
-    )
-}
+import Home from './pages/Home'
+
+const App = () => <Home />
 
 export default App

@@ -5,6 +5,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import Divider from '@mui/material/Divider'
+import { Outlet } from 'react-router-dom'
 
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded'
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded'
@@ -12,7 +13,7 @@ import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded'
 import { useTheme } from '../../contexts/ThemeContext'
 import { DRAWER_WIDTH } from '../../constants'
 
-const Layout = ({ children }) => {
+const Layout = () => {
     const { themeMode, toggleTheme } = useTheme()
     const handleThemeChange = () => toggleTheme()
 
@@ -63,7 +64,7 @@ const Layout = ({ children }) => {
                     ml: `${DRAWER_WIDTH}px`,
                 }}
             >
-                {children}
+                <Outlet />
             </Box>
         </>
     )
