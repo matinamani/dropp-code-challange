@@ -10,17 +10,35 @@ import axios from 'axios'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
+import { useLocalStorage } from '../../helpers/hooks'
+
 const LoginCard = () => {
     const [loading, setLoading] = useState(false)
+    const [user, setUser] = useLocalStorage('user')
 
     const validationSchema = Yup.object({
         username: Yup.string().required('Username is Required'),
         password: Yup.string().required('Password is Required'),
     })
 
+    const authenticate = async (values) => {
+        const { data } = await axios.get('http://localhost:3000/users')
+        console.log(data)
+
+        let flag = false
+        data.forEach((u) =>
+            u.username === values.username && u.password === values.password
+                ? (flag = true)
+                : flag
+        )
+
+        return flag
+    }
+
     const onSubmit = async (values) => {
         setLoading(true)
-
+        const auth = await authenticate(values)
+        if (auth) setUser({ loggedIn: true })
         setLoading(false)
     }
 

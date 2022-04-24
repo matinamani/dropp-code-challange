@@ -24,8 +24,22 @@ const SignUpCard = () => {
         confirm: Yup.string().required('Please Confirm Your Password.'),
     })
 
-    const onSubmit = async (values) => {
+    const onSubmit = async (values, { resetForm }) => {
         setLoading(true)
+
+        if (values.password === values.confirm) {
+            const { status } = await axios.post('http://localhost:3000/users', {
+                username: values.username,
+                password: values.password,
+            })
+            if (status === 201) alert('Success!')
+            else alert('An Error occurred during Sign Up!')
+
+            resetForm()
+        } else {
+            alert('Please Confirm Your Password')
+            values.confirm = ''
+        }
 
         setLoading(false)
     }
