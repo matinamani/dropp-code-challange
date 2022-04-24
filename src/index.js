@@ -6,8 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import App from './App'
 import ThemeProvider from './contexts/ThemeContext'
 import Layout from './components/Layout'
-// import Login from './pages/Login'
-import LoginCard from './components/sections/LoginCard'
+import Login from './pages/Login'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -21,7 +20,7 @@ const RoutesContainer = () => (
             <Route element={<Layout />}>
                 <Route path="/" element={<App />} />
             </Route>
-            <Route path="/login" element={<LoginCard />} />
+            <Route path="/login" element={<Login />} />
         </Routes>
     </Router>
 )
