@@ -1,8 +1,10 @@
 import GroupIcon from '@mui/icons-material/Group'
 import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded'
 import StorageRoundedIcon from '@mui/icons-material/StorageRounded'
+import { red, pink, purple, green, blue, orange } from '@mui/material/colors'
 
 export const DRAWER_WIDTH = 240
+export const APP_BAR_HEIGHT = 65
 
 export const LOGIN_DATA = {
     SING_UP: {
@@ -43,3 +45,7 @@ export const NAV_BAR_LINKS = [
         href: '/resources',
     },
 ]
+
+export const USERS_COLUMNS = [{ field: '' }]
+
+export const COLORS = [red, pink, purple, green, blue, orange]

@@ -11,7 +11,7 @@ const useTheme = () => {
 }
 
 const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState(LIGHT_THEME)
+    const [theme, setTheme] = useState(DARK_THEME)
     const toggleTheme = () =>
         setTheme(theme === LIGHT_THEME ? DARK_THEME : LIGHT_THEME)
 

@@ -16,7 +16,7 @@ import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded'
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 
 import { useTheme } from '../../contexts/ThemeContext'
-import { DRAWER_WIDTH, NAV_BAR_LINKS } from '../../constants'
+import { DRAWER_WIDTH, APP_BAR_HEIGHT, NAV_BAR_LINKS } from '../../constants'
 import { useAuth } from '../../contexts/AuthContext'
 
 const Layout = () => {
@@ -26,7 +26,7 @@ const Layout = () => {
     const handleLogOut = () => logout()
 
     return (
-        <>
+        <Box>
             <Drawer
                 sx={{
                     width: DRAWER_WIDTH,
@@ -47,6 +47,7 @@ const Layout = () => {
                 sx={{
                     px: 2,
                     width: `calc(100% - ${DRAWER_WIDTH}px)`,
+                    height: APP_BAR_HEIGHT,
                     ml: `${DRAWER_WIDTH}px`,
                 }}
                 position="static"
@@ -83,12 +84,14 @@ const Layout = () => {
             <Box
                 sx={{
                     width: `calc(100% - ${DRAWER_WIDTH}px)`,
+                    position: 'absolute',
+                    height: `calc(100% - ${APP_BAR_HEIGHT}px)`,
                     ml: `${DRAWER_WIDTH}px`,
                 }}
             >
                 <Outlet />
             </Box>
-        </>
+        </Box>
     )
 }
 
