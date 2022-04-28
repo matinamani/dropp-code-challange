@@ -15,6 +15,9 @@ import AuthProvider from './contexts/AuthContext'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import Login from './pages/Login'
+import Users from './pages/Users'
+import NewUser from './pages/NewUser'
+import Resources from './pages/Resources'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -35,6 +38,9 @@ const RoutesContainer = () => (
                 }
             >
                 <Route path="/" element={<Home />} />
+                <Route path="/users" element={<Users />} />
+                <Route path="/new-user" element={<NewUser />} />
+                <Route path="/resources" element={<Resources />} />
             </Route>
             <Route path="/login" element={<Login />} />
         </Routes>
