@@ -17,6 +17,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Users from './pages/Users'
 import User from './pages/User'
+import EditUser from './pages/EditUser'
 import NewUser from './pages/NewUser'
 import Resources from './pages/Resources'
 
@@ -41,6 +42,7 @@ const RoutesContainer = () => (
                 <Route path="/" element={<Home />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/users/:id" element={<User />} />
+                <Route path="/users/:id/edit" element={<EditUser />} />
                 <Route path="/new-user" element={<NewUser />} />
                 <Route path="/resources" element={<Resources />} />
             </Route>

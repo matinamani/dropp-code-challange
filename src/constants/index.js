@@ -46,6 +46,4 @@ export const NAV_BAR_LINKS = [
     },
 ]
 
-export const USERS_COLUMNS = [{ field: '' }]
-
 export const COLORS = [red, pink, purple, green, blue, orange]
