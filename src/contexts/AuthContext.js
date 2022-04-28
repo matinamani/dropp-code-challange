@@ -5,7 +5,7 @@ import { useLocalStorage } from '../helpers/hooks'
 const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useLocalStorage('user', undefined)
+    const [user, setUser] = useLocalStorage('user')
 
     const login = (data) => setUser(data)
     const logout = () => setUser(undefined)

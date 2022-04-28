@@ -43,9 +43,6 @@ const LoginCard = () => {
 
         try {
             const auth = await authenticate(values)
-
-            console.log(auth)
-
             if (auth) {
                 login(values)
                 navigate('/')

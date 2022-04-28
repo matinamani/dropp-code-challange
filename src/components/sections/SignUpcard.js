@@ -34,6 +34,7 @@ const SignUpCard = () => {
                     password: values.password,
                 })
                 alert('Success')
+                resetForm()
             } catch (err) {
                 console.log(err)
             }
@@ -82,6 +83,8 @@ const SignUpCard = () => {
                         fullWidth
                         error={
                             formik.touched.username && formik.errors.username
+                                ? true
+                                : false
                         }
                         {...formik.getFieldProps('username')}
                     />
@@ -99,6 +102,8 @@ const SignUpCard = () => {
                         fullWidth
                         error={
                             formik.touched.password && formik.errors.password
+                                ? true
+                                : false
                         }
                         {...formik.getFieldProps('password')}
                     />
@@ -114,7 +119,11 @@ const SignUpCard = () => {
                         sx={{ my: 1 }}
                         label="Confirm Password"
                         fullWidth
-                        error={formik.touched.confirm && formik.errors.confirm}
+                        error={
+                            formik.touched.confirm && formik.errors.confirm
+                                ? true
+                                : false
+                        }
                         {...formik.getFieldProps('confirm')}
                     />
                     {formik.touched.confirm && formik.errors.confirm && (

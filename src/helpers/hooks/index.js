@@ -1,7 +1,11 @@
 import { useState } from 'react'
 
 export const useLocalStorage = (name, initialValue = undefined) => {
-    const [value, setVal] = useState(localStorage.getItem(name) || initialValue)
+    const [value, setVal] = useState(() => {
+        let val = localStorage.getItem(name)
+        if (val === 'undefined') val = undefined
+        return val || initialValue
+    })
 
     const setValue = (val) => {
         setVal(val)

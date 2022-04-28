@@ -10,10 +10,10 @@ import {
 
 import { useAuth } from './contexts/AuthContext'
 
-import App from './App'
 import ThemeProvider from './contexts/ThemeContext'
 import AuthProvider from './contexts/AuthContext'
 import Layout from './components/Layout'
+import Home from './pages/Home'
 import Login from './pages/Login'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -34,7 +34,7 @@ const RoutesContainer = () => (
                     </RequireAuth>
                 }
             >
-                <Route path="/" element={<App />} />
+                <Route path="/" element={<Home />} />
             </Route>
             <Route path="/login" element={<Login />} />
         </Routes>
