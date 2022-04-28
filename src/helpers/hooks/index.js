@@ -5,7 +5,7 @@ export const useLocalStorage = (name, initialValue = undefined) => {
 
     const setValue = (val) => {
         setVal(val)
-        localStorage.setItem(name, val)
+        localStorage.setItem(name, JSON.stringify(val))
     }
 
     return [value, setValue]

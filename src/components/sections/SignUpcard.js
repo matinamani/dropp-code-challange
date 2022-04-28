@@ -28,14 +28,15 @@ const SignUpCard = () => {
         setLoading(true)
 
         if (values.password === values.confirm) {
-            const { status } = await axios.post('http://localhost:3000/users', {
-                username: values.username,
-                password: values.password,
-            })
-            if (status === 201) alert('Success!')
-            else alert('An Error occurred during Sign Up!')
-
-            resetForm()
+            try {
+                await axios.post('http://localhost:3000/users', {
+                    username: values.username,
+                    password: values.password,
+                })
+                alert('Success')
+            } catch (err) {
+                console.log(err)
+            }
         } else {
             alert('Please Confirm Your Password')
             values.confirm = ''
@@ -126,7 +127,7 @@ const SignUpCard = () => {
                         <CircularProgress />
                     ) : (
                         <Button type="submit" variant="contained">
-                            Login
+                            Sign Up
                         </Button>
                     )}
                 </form>

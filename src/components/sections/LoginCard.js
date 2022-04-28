@@ -6,15 +6,17 @@ import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
-import { useLocalStorage } from '../../helpers/hooks'
+import { useAuth } from '../../contexts/AuthContext'
 
 const LoginCard = () => {
     const [loading, setLoading] = useState(false)
-    const [user, setUser] = useLocalStorage('user')
+    const { login } = useAuth()
+    const navigate = useNavigate()
 
     const validationSchema = Yup.object({
         username: Yup.string().required('Username is Required'),
@@ -23,6 +25,7 @@ const LoginCard = () => {
 
     const authenticate = async (values) => {
         const { data } = await axios.get('http://localhost:3000/users')
+
         console.log(data)
 
         let flag = false
@@ -35,10 +38,25 @@ const LoginCard = () => {
         return flag
     }
 
-    const onSubmit = async (values) => {
+    const onSubmit = async (values, { resetForm }) => {
         setLoading(true)
-        const auth = await authenticate(values)
-        if (auth) setUser({ loggedIn: true })
+
+        try {
+            const auth = await authenticate(values)
+
+            console.log(auth)
+
+            if (auth) {
+                login(values)
+                navigate('/')
+            } else {
+                alert('Username or Password is Incorrect.')
+                resetForm()
+            }
+        } catch (err) {
+            console.log(err)
+        }
+
         setLoading(false)
     }
 

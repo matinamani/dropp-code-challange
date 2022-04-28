@@ -9,13 +9,17 @@ import { Outlet } from 'react-router-dom'
 
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded'
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded'
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 
 import { useTheme } from '../../contexts/ThemeContext'
 import { DRAWER_WIDTH } from '../../constants'
+import { useAuth } from '../../contexts/AuthContext'
 
 const Layout = () => {
+    const { logout } = useAuth()
     const { themeMode, toggleTheme } = useTheme()
     const handleThemeChange = () => toggleTheme()
+    const handleLogOut = () => logout()
 
     return (
         <>
@@ -46,6 +50,9 @@ const Layout = () => {
                     <Typography sx={{ flexGrow: 1 }} variant="h4">
                         Admin Panel
                     </Typography>
+                    <IconButton sx={{ color: '#fff' }} onClick={handleLogOut}>
+                        <LogoutRoundedIcon />
+                    </IconButton>
                     <IconButton
                         sx={{ color: '#fff' }}
                         onClick={handleThemeChange}
