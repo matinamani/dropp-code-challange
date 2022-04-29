@@ -87,6 +87,9 @@ const Layout = () => {
                     position: 'absolute',
                     height: `calc(100% - ${APP_BAR_HEIGHT}px)`,
                     ml: `${DRAWER_WIDTH}px`,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                 }}
             >
                 <Outlet />
