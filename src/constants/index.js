@@ -1,6 +1,7 @@
 import GroupIcon from '@mui/icons-material/Group'
 import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded'
 import StorageRoundedIcon from '@mui/icons-material/StorageRounded'
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded'
 import { red, pink, purple, green, blue, orange } from '@mui/material/colors'
 
 export const DRAWER_WIDTH = 240
@@ -26,6 +27,12 @@ export const ERROR_MSG = {
 }
 
 export const NAV_BAR_LINKS = [
+    {
+        name: 'Home',
+        title: 'Home Page',
+        icon: <HomeRoundedIcon />,
+        href: '/',
+    },
     {
         name: 'users',
         title: 'Users List',
