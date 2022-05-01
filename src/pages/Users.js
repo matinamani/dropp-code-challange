@@ -5,9 +5,12 @@ import { useNavigate } from 'react-router-dom'
 
 import axios from '../helpers/api'
 import { COLORS } from '../constants'
+import { CircularProgress } from '@mui/material'
 
 const Users = () => {
     const [users, setUsers] = useState([])
+    const [loading, setLoading] = useState(false)
+
     const columns = [
         { field: 'id', headerName: 'ID', width: 90 },
         {
@@ -42,38 +45,46 @@ const Users = () => {
     ]
 
     const getUsers = async () => {
+        setLoading(true)
+
         const pickRandomColor = () =>
             COLORS[Math.floor(Math.random() * 6)][
                 Math.floor(Math.random() * 8 + 1) * 100
             ]
 
-        const { data: res1 } = await axios.get('/users?page=1')
-        const { data: res2 } = await axios.get('/users?page=2')
+        try {
+            const { data: res1 } = await axios.get('/users?page=1')
+            const { data: res2 } = await axios.get('/users?page=2')
 
-        setUsers([
-            ...res1.data.map((user) => ({
-                id: user.id,
-                avatar: {
-                    src: user.avatar,
-                    alt: user.email,
-                    color: pickRandomColor(),
-                    children: user.first_name[0],
-                },
-                email: user.email,
-                name: `${user.first_name} ${user.last_name}`,
-            })),
-            ...res2.data.map((user) => ({
-                id: user.id,
-                avatar: {
-                    src: user.avatar,
-                    alt: user.email,
-                    color: pickRandomColor(),
-                    children: user.first_name[0],
-                },
-                email: user.email,
-                name: `${user.first_name} ${user.last_name}`,
-            })),
-        ])
+            setUsers([
+                ...res1.data.map((user) => ({
+                    id: user.id,
+                    avatar: {
+                        src: user.avatar,
+                        alt: user.email,
+                        color: pickRandomColor(),
+                        children: user.first_name[0],
+                    },
+                    email: user.email,
+                    name: `${user.first_name} ${user.last_name}`,
+                })),
+                ...res2.data.map((user) => ({
+                    id: user.id,
+                    avatar: {
+                        src: user.avatar,
+                        alt: user.email,
+                        color: pickRandomColor(),
+                        children: user.first_name[0],
+                    },
+                    email: user.email,
+                    name: `${user.first_name} ${user.last_name}`,
+                })),
+            ])
+        } catch (err) {
+            console.log(err)
+        }
+
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -82,7 +93,9 @@ const Users = () => {
 
     const navigate = useNavigate()
 
-    return (
+    return loading ? (
+        <CircularProgress />
+    ) : (
         <DataGrid
             rows={users}
             columns={columns}

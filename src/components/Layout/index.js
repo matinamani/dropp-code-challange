@@ -25,7 +25,7 @@ const Layout = () => {
     const handleThemeChange = () => toggleTheme()
     const handleLogOut = () => logout()
 
-    window.onbeforeunload = () => logout()
+    // window.onbeforeunload = () => logout()
 
     return (
         <Box>

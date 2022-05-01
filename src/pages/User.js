@@ -6,17 +6,25 @@ import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import axios from '../helpers/api'
 
 const User = () => {
     const { id } = useParams()
     const [user, setUser] = useState({})
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
     const getUser = async (id) => {
-        const { data: res } = await axios.get(`/users/${id}`)
-        setUser(res.data)
+        setLoading(true)
+        try {
+            const { data: res } = await axios.get(`/users/${id}`)
+            setUser(res.data)
+        } catch (err) {
+            console.log(err)
+        }
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -25,7 +33,9 @@ const User = () => {
 
     const handleClick = () => navigate(`/users/${id}/edit`)
 
-    return (
+    return loading ? (
+        <CircularProgress />
+    ) : (
         <Card sx={{ maxWidth: 340 }}>
             <CardMedia
                 component="img"
