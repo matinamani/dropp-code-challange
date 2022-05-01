@@ -20,6 +20,8 @@ import User from './pages/User'
 import EditUser from './pages/EditUser'
 import NewUser from './pages/NewUser'
 import Resources from './pages/Resources'
+import Resource from './pages/Resource'
+import EditResource from './pages/EditResource'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -45,6 +47,8 @@ const RoutesContainer = () => (
                 <Route path="/users/:id/edit" element={<EditUser />} />
                 <Route path="/new-user" element={<NewUser />} />
                 <Route path="/resources" element={<Resources />} />
+                <Route path="/resources/:id" element={<Resource />} />
+                <Route path="/resources/:id/edit" element={<EditResource />} />
             </Route>
             <Route path="/login" element={<Login />} />
         </Routes>

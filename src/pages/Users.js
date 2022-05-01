@@ -18,7 +18,11 @@ const Users = () => {
     const navigate = useNavigate()
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 90 },
+        {
+            field: 'id',
+            headerName: 'ID',
+            width: 90,
+        },
         {
             field: 'avatar',
             headerName: 'Avatar',
@@ -27,6 +31,7 @@ const Users = () => {
                     <Avatar
                         sx={{
                             bgcolor: value.color,
+                            cursor: 'pointer',
                         }}
                         src={value.src}
                         alt={value.alt}
@@ -69,9 +74,11 @@ const Users = () => {
             field: 'delete',
             headerName: 'Delete',
             renderCell: ({ value }) => {
+                const handleDelete = async () => {}
+
                 return (
                     <IconButton color="error">
-                        <DeleteIcon />
+                        <DeleteIcon onClick={handleDelete} />
                     </IconButton>
                 )
             },
@@ -142,6 +149,7 @@ const Users = () => {
             pageSize={pageSize}
             rowsPerPageOptions={[6, 9, 12]}
             disableColumnMenu
+            disableSelectionOnClick
             onPageSizeChange={(size) => setPageSize(size)}
         />
     )
