@@ -14,6 +14,7 @@ const User = () => {
     const { id } = useParams()
     const [user, setUser] = useState({})
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(false)
     const navigate = useNavigate()
 
     const getUser = async (id) => {
@@ -22,6 +23,8 @@ const User = () => {
             const { data: res } = await axios.get(`/users/${id}`)
             setUser(res.data)
         } catch (err) {
+            setError(true)
+
             console.log(err)
         }
         setLoading(false)
@@ -35,7 +38,7 @@ const User = () => {
 
     return loading ? (
         <CircularProgress />
-    ) : (
+    ) : !error ? (
         <Card sx={{ maxWidth: 340 }}>
             <CardMedia
                 component="img"
@@ -68,6 +71,10 @@ const User = () => {
                 </Button>
             </CardActions>
         </Card>
+    ) : (
+        <Typography variant="h5" color="error">
+            An Error Occurred
+        </Typography>
     )
 }
 

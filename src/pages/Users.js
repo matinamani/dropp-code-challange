@@ -110,6 +110,7 @@ const Users = () => {
                 ...res2.data.map((user) => ({
                     id: user.id,
                     avatar: {
+                        id: user.id,
                         src: user.avatar,
                         alt: user.email,
                         color: pickRandomColor(),
