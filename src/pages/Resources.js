@@ -45,7 +45,7 @@ const Resources = () => {
                         height: '100%',
                         cursor: 'pointer',
                     }}
-                    onClick={() => navigate(`/resource/${value.id}`)}
+                    onClick={() => navigate(`/resources/${value.id}`)}
                 ></div>
             ),
             width: 80,
@@ -64,7 +64,7 @@ const Resources = () => {
                 return (
                     <IconButton
                         color="primary"
-                        onClick={() => navigate(`/resource/${value}/edit`)}
+                        onClick={() => navigate(`/resources/${value}/edit`)}
                     >
                         <EditIcon />
                     </IconButton>
