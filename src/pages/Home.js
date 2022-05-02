@@ -49,7 +49,10 @@ const Home = () => {
                 spacing={2}
             >
                 <Grid item xs={6}>
-                    <Paper sx={{ p: 4 }} elevation={12}>
+                    <Paper
+                        sx={{ p: 4, bgcolor: 'success.main' }}
+                        elevation={12}
+                    >
                         {userLoading ? (
                             <CircularProgress />
                         ) : (
@@ -69,7 +72,7 @@ const Home = () => {
                     </Paper>
                 </Grid>
                 <Grid item xs={6}>
-                    <Paper sx={{ p: 4 }} elevation={12}>
+                    <Paper sx={{ p: 4, bgcolor: 'info.main' }} elevation={12}>
                         {resourceLoading ? (
                             <CircularProgress />
                         ) : (
@@ -82,7 +85,7 @@ const Home = () => {
                                     Total Resources
                                 </Typography>
                                 <Typography variant="h3" align="center">
-                                    {users}
+                                    {resource}
                                 </Typography>
                             </>
                         )}
