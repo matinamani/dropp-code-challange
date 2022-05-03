@@ -11,7 +11,7 @@ import axios from '../helpers/api'
 import { CircularProgress } from '@mui/material'
 
 const Resources = () => {
-    const [resource, setResource] = useState([])
+    const [resources, setResources] = useState([])
     const [loading, setLoading] = useState(false)
     const [pageSize, setPageSize] = useState(9)
 
@@ -80,8 +80,8 @@ const Resources = () => {
                 const handleDelete = async () => {}
 
                 return (
-                    <IconButton color="error">
-                        <DeleteIcon onClick={handleDelete} />
+                    <IconButton color="error" onClick={handleDelete}>
+                        <DeleteIcon />
                     </IconButton>
                 )
             },
@@ -97,7 +97,7 @@ const Resources = () => {
             const { data: res1 } = await axios.get('/resource?page=1')
             const { data: res2 } = await axios.get('/resource?page=2')
 
-            setResource([
+            setResources([
                 ...res1.data.map((resource) => ({
                     id: resource.id,
                     name: resource.name,
@@ -138,7 +138,7 @@ const Resources = () => {
         <CircularProgress />
     ) : (
         <DataGrid
-            rows={resource}
+            rows={resources}
             columns={columns}
             pageSize={pageSize}
             rowsPerPageOptions={[6, 9, 12]}

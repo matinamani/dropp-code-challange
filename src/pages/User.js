@@ -35,6 +35,7 @@ const User = () => {
     }, [])
 
     const handleClick = () => navigate(`/users/${id}/edit`)
+    const handleDelete = () => {}
 
     return loading ? (
         <CircularProgress />
@@ -67,7 +68,10 @@ const User = () => {
             </CardContent>
             <CardActions>
                 <Button size="small" onClick={handleClick}>
-                    Edit User
+                    Edit
+                </Button>
+                <Button size="small" onClick={handleDelete} color="error">
+                    Delete
                 </Button>
             </CardActions>
         </Card>

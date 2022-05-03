@@ -159,7 +159,7 @@ const Form = ({ user }) => {
                 open={snackbar}
                 setOpen={setSnackbar}
             >
-                Edits Are Submitted Successfully
+                Changes Are Submitted Successfully
             </MySnackbar>
         </Grid>
     )
