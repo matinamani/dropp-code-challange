@@ -9,6 +9,7 @@ import Avatar from '@mui/material/Avatar'
 
 import * as Yup from 'yup'
 
+import MySnackbar from '../components/helpers/MySnackbar'
 import axios from '../helpers/api'
 import { Typography } from '@mui/material'
 
@@ -39,6 +40,7 @@ const EditUser = () => {
 
 const Form = ({ user }) => {
     const [loading, setLoading] = useState(false)
+    const [snackbar, setSnackbar] = useState(false)
 
     const validationSchema = Yup.object({
         firstName: Yup.string().required('First Name is Required!'),
@@ -53,6 +55,8 @@ const Form = ({ user }) => {
 
         try {
             const res = await axios.put(`/users/${user.id}`, values)
+            if (res.status === 200) setSnackbar(true)
+            console.log(res)
         } catch (err) {
             console.log(err)
         }
@@ -150,6 +154,13 @@ const Form = ({ user }) => {
                     Submit Changes
                 </Button>
             )}
+            <MySnackbar
+                severity="success"
+                open={snackbar}
+                setOpen={setSnackbar}
+            >
+                Edits Are Submitted Successfully
+            </MySnackbar>
         </Grid>
     )
 }

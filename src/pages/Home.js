@@ -53,41 +53,29 @@ const Home = () => {
                         sx={{ p: 4, bgcolor: 'success.main' }}
                         elevation={12}
                     >
+                        <Typography variant="h4" paragraph align="center">
+                            Total Users
+                        </Typography>
                         {userLoading ? (
                             <CircularProgress />
                         ) : (
-                            <>
-                                <Typography
-                                    variant="h4"
-                                    paragraph
-                                    align="center"
-                                >
-                                    Total Users
-                                </Typography>
-                                <Typography variant="h3" align="center">
-                                    {users}
-                                </Typography>
-                            </>
+                            <Typography variant="h3" align="center">
+                                {users}
+                            </Typography>
                         )}
                     </Paper>
                 </Grid>
                 <Grid item xs={6}>
                     <Paper sx={{ p: 4, bgcolor: 'info.main' }} elevation={12}>
+                        <Typography variant="h4" paragraph align="center">
+                            Total Resources
+                        </Typography>
                         {resourceLoading ? (
                             <CircularProgress />
                         ) : (
-                            <>
-                                <Typography
-                                    variant="h4"
-                                    paragraph
-                                    align="center"
-                                >
-                                    Total Resources
-                                </Typography>
-                                <Typography variant="h3" align="center">
-                                    {resource}
-                                </Typography>
-                            </>
+                            <Typography variant="h3" align="center">
+                                {resource}
+                            </Typography>
                         )}
                     </Paper>
                 </Grid>
