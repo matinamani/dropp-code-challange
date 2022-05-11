@@ -11,18 +11,37 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import axios from '../helpers/api'
 import { COLORS } from '../constants'
 import MyDialog from '../components/helpers/MyDialog'
+import MySnackbar from '../components/helpers/MySnackbar'
 
 const Users = () => {
     const [dialog, setDialog] = useState(false)
     const [users, setUsers] = useState([])
+    const [selectedUser, setSelectedUsers] = useState(null)
     const [loading, setLoading] = useState(false)
     const [pageSize, setPageSize] = useState(9)
+    const [snackbar, setSnackbar] = useState(false)
     const navigate = useNavigate()
 
     const showDialog = (id) => () => {
+        setSelectedUsers(id)
         setDialog(true)
+    }
 
-        // TODO:
+    const handleDelete = async () => {
+        setDialog(false)
+        setLoading(true)
+
+        try {
+            const res = await axios.delete(`/users/${selectedUser}`)
+            if (res.status === 204) {
+                setUsers(users.filter((user) => user.id !== selectedUser))
+                setSnackbar(true)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+
+        setLoading(false)
     }
 
     const columns = [
@@ -159,13 +178,20 @@ const Users = () => {
                 disableSelectionOnClick
                 onPageSizeChange={(size) => setPageSize(size)}
             />
-            {/* <MyDialog
+            <MyDialog
                 open={dialog}
                 setOpen={setDialog}
                 onConfirm={handleDelete}
                 title="Warning"
                 text="Are you sure you want to delete this user?"
-            /> */}
+            />
+            <MySnackbar
+                severity="success"
+                open={snackbar}
+                setOpen={setSnackbar}
+            >
+                User Deleted Successfully
+            </MySnackbar>
         </>
     )
 }

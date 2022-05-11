@@ -1,20 +1,50 @@
 import { useState, useEffect } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import IconButton from '@mui/material/IconButton'
+import CircularProgress from '@mui/material/CircularProgress'
 import { useNavigate } from 'react-router-dom'
 
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 
 import axios from '../helpers/api'
-import { CircularProgress } from '@mui/material'
+
+import MyDialog from '../components/helpers/MyDialog'
+import MySnackbar from '../components/helpers/MySnackbar'
 
 const Resources = () => {
     const [resources, setResources] = useState([])
     const [loading, setLoading] = useState(false)
     const [pageSize, setPageSize] = useState(9)
-
+    const [selectedResource, setSelectedResource] = useState(null)
+    const [dialog, setDialog] = useState(false)
+    const [snackbar, setSnackbar] = useState(false)
     const navigate = useNavigate()
+
+    const showDialog = (id) => () => {
+        setSelectedResource(id)
+        setDialog(true)
+    }
+
+    const handleDelete = async () => {
+        setDialog(false)
+        setLoading(true)
+
+        try {
+            try {
+                const res = await axios.delete(`/resource/${selectedResource}`)
+                if (res.status === 204) {
+                    setResources(
+                        resources.filter((res) => res.id !== selectedResource)
+                    )
+                    setSnackbar(true)
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        } catch (error) {}
+        setLoading(false)
+    }
 
     const columns = [
         {
@@ -79,7 +109,7 @@ const Resources = () => {
                 const handleDelete = async () => {}
 
                 return (
-                    <IconButton color="error" onClick={handleDelete}>
+                    <IconButton color="error" onClick={showDialog(value)}>
                         <DeleteIcon />
                     </IconButton>
                 )
@@ -136,15 +166,31 @@ const Resources = () => {
     return loading ? (
         <CircularProgress />
     ) : (
-        <DataGrid
-            rows={resources}
-            columns={columns}
-            pageSize={pageSize}
-            rowsPerPageOptions={[6, 9, 12]}
-            disableColumnMenu
-            disableSelectionOnClick
-            onPageSizeChange={(size) => setPageSize(size)}
-        />
+        <>
+            <DataGrid
+                rows={resources}
+                columns={columns}
+                pageSize={pageSize}
+                rowsPerPageOptions={[6, 9, 12]}
+                disableColumnMenu
+                disableSelectionOnClick
+                onPageSizeChange={(size) => setPageSize(size)}
+            />
+            <MyDialog
+                open={dialog}
+                setOpen={setDialog}
+                onConfirm={handleDelete}
+                title="Warning"
+                text="Are you sure you want to delete this user?"
+            />
+            <MySnackbar
+                severity="success"
+                open={snackbar}
+                setOpen={setSnackbar}
+            >
+                User Deleted Successfully
+            </MySnackbar>
+        </>
     )
 }
 
