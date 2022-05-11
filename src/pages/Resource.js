@@ -9,12 +9,14 @@ import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 
 import axios from '../helpers/api'
+import MyDialog from '../components/helpers/MyDialog'
 
 const Resource = () => {
     const { id } = useParams()
     const [resource, setResource] = useState({})
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
+    const [dialog, setDialog] = useState(false)
     const navigate = useNavigate()
 
     const getResource = async () => {
@@ -38,41 +40,65 @@ const Resource = () => {
     }, [resource])
 
     const handleClick = () => navigate(`/resources/${id}/edit`)
-    const handleDelete = () => {}
+    const handleDelete = async () => {
+        setDialog(false)
+        setLoading(true)
+
+        try {
+            const res = await axios.delete(`/resource/${id}`)
+            if (res.status === 204) navigate('/resources')
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     return loading ? (
         <CircularProgress />
     ) : !error ? (
-        <Card sx={{ maxWidth: 340 }}>
-            <CardMedia
-                sx={{ bgcolor: resource.color }}
-                component="img"
-                height={200}
+        <>
+            <Card sx={{ maxWidth: 340 }}>
+                <CardMedia
+                    sx={{ bgcolor: resource.color }}
+                    component="img"
+                    height={200}
+                />
+                <CardContent>
+                    <Typography variant="h5" gutterBottom>
+                        {resource.name}
+                    </Typography>
+                    <Typography variant="body1" paragraph>
+                        Lorem, ipsum dolor sit amet consectetur adipisicing
+                        elit. Corrupti corporis ratione totam quae dicta
+                        aliquam. Maiores, quam vel cum beatae a tempora
+                        deleniti, laborum dignissimos ex praesentium iure ab
+                        deserunt.
+                    </Typography>
+                    <Typography variant="body2">{resource.year}</Typography>
+                    <Typography variant="caption">
+                        {resource.pantone_value}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button size="small" onClick={handleClick}>
+                        Edit
+                    </Button>
+                    <Button
+                        size="small"
+                        onClick={() => setDialog(true)}
+                        color="error"
+                    >
+                        Delete
+                    </Button>
+                </CardActions>
+            </Card>
+            <MyDialog
+                open={dialog}
+                setOpen={setDialog}
+                onConfirm={handleDelete}
+                title="Warning"
+                text="Are you sure you want to delete this resource?"
             />
-            <CardContent>
-                <Typography variant="h5" gutterBottom>
-                    {resource.name}
-                </Typography>
-                <Typography variant="body1" paragraph>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Corrupti corporis ratione totam quae dicta aliquam. Maiores,
-                    quam vel cum beatae a tempora deleniti, laborum dignissimos
-                    ex praesentium iure ab deserunt.
-                </Typography>
-                <Typography variant="body2">{resource.year}</Typography>
-                <Typography variant="caption">
-                    {resource.pantone_value}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button size="small" onClick={handleClick}>
-                    Edit
-                </Button>
-                <Button size="small" onClick={handleDelete} color="error">
-                    Delete
-                </Button>
-            </CardActions>
-        </Card>
+        </>
     ) : (
         <Typography variant="h4" color="error">
             An Error Occurred!
