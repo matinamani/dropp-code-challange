@@ -20,12 +20,10 @@ import { DRAWER_WIDTH, APP_BAR_HEIGHT, NAV_BAR_LINKS } from '../../constants'
 import { useAuth } from '../../contexts/AuthContext'
 
 const Layout = () => {
-    const { logout } = useAuth()
+    const { logout, user } = useAuth()
     const { themeMode, toggleTheme } = useTheme()
     const handleThemeChange = () => toggleTheme()
     const handleLogOut = () => logout()
-
-    // window.onbeforeunload = () => logout()
 
     return (
         <Box>
@@ -68,6 +66,15 @@ const Layout = () => {
                             Admin Panel
                         </Typography>
                     </Box>
+                    <Typography variant="h5">
+                        Welcome {user.username}
+                    </Typography>
+                    <Divider
+                        sx={{ mx: 2 }}
+                        orientation="vertical"
+                        variant="middle"
+                        flexItem
+                    />
                     <IconButton sx={{ color: '#fff' }} onClick={handleLogOut}>
                         <LogoutRoundedIcon />
                     </IconButton>
