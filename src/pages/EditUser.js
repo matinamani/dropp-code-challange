@@ -6,12 +6,12 @@ import Grid from '@mui/material/Grid'
 import CircularProgress from '@mui/material/CircularProgress'
 import Button from '@mui/material/Button'
 import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
 
 import * as Yup from 'yup'
 
 import MySnackbar from '../components/helpers/MySnackbar'
 import axios from '../helpers/api'
-import { Typography } from '@mui/material'
 
 const EditUser = () => {
     const { id } = useParams()
