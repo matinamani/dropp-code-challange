@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
+import CircularProgress from '@mui/material/CircularProgress'
 import { useNavigate } from 'react-router-dom'
 
 import EditIcon from '@mui/icons-material/Edit'
@@ -9,13 +10,20 @@ import DeleteIcon from '@mui/icons-material/Delete'
 
 import axios from '../helpers/api'
 import { COLORS } from '../constants'
-import { CircularProgress } from '@mui/material'
+import MyDialog from '../components/helpers/MyDialog'
 
 const Users = () => {
+    const [dialog, setDialog] = useState(false)
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(false)
     const [pageSize, setPageSize] = useState(9)
     const navigate = useNavigate()
+
+    const showDialog = (id) => () => {
+        setDialog(true)
+
+        // TODO:
+    }
 
     const columns = [
         {
@@ -74,11 +82,9 @@ const Users = () => {
             field: 'delete',
             headerName: 'Delete',
             renderCell: ({ value }) => {
-                const handleDelete = async () => {}
-
                 return (
-                    <IconButton color="error">
-                        <DeleteIcon onClick={handleDelete} />
+                    <IconButton color="error" onClick={showDialog(value)}>
+                        <DeleteIcon />
                     </IconButton>
                 )
             },
@@ -143,15 +149,24 @@ const Users = () => {
     return loading ? (
         <CircularProgress />
     ) : (
-        <DataGrid
-            rows={users}
-            columns={columns}
-            pageSize={pageSize}
-            rowsPerPageOptions={[6, 9, 12]}
-            disableColumnMenu
-            disableSelectionOnClick
-            onPageSizeChange={(size) => setPageSize(size)}
-        />
+        <>
+            <DataGrid
+                rows={users}
+                columns={columns}
+                pageSize={pageSize}
+                rowsPerPageOptions={[6, 9, 12]}
+                disableColumnMenu
+                disableSelectionOnClick
+                onPageSizeChange={(size) => setPageSize(size)}
+            />
+            {/* <MyDialog
+                open={dialog}
+                setOpen={setDialog}
+                onConfirm={handleDelete}
+                title="Warning"
+                text="Are you sure you want to delete this user?"
+            /> */}
+        </>
     )
 }
 

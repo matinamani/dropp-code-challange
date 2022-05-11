@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
-import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
 import { useNavigate } from 'react-router-dom'
 

@@ -9,12 +9,14 @@ import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 
 import axios from '../helpers/api'
+import MyDialog from '../components/helpers/MyDialog'
 
 const User = () => {
     const { id } = useParams()
     const [user, setUser] = useState({})
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
+    const [dialog, setDialog] = useState(false)
     const navigate = useNavigate()
 
     const getUser = async (id) => {
@@ -35,46 +37,70 @@ const User = () => {
     }, [])
 
     const handleClick = () => navigate(`/users/${id}/edit`)
-    const handleDelete = () => {}
+    const handleDelete = async () => {
+        setDialog(false)
+        setLoading(true)
+
+        try {
+            const res = await axios.delete(`/users/${id}`)
+            if (res.status === 204) navigate('/users')
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     return loading ? (
         <CircularProgress />
     ) : !error ? (
-        <Card sx={{ maxWidth: 340 }}>
-            <CardMedia
-                component="img"
-                height={240}
-                image={user.avatar}
-                alt={user.email}
+        <>
+            <Card sx={{ maxWidth: 340 }}>
+                <CardMedia
+                    component="img"
+                    height={240}
+                    image={user.avatar}
+                    alt={user.email}
+                />
+                <CardContent>
+                    <Typography
+                        variant="h5"
+                        gutterBottom
+                    >{`${user.first_name} ${user.last_name}`}</Typography>
+                    <Typography variant="body1" paragraph>
+                        Lorem, ipsum dolor sit amet consectetur adipisicing
+                        elit. Corrupti corporis ratione totam quae dicta
+                        aliquam. Maiores, quam vel cum beatae a tempora
+                        deleniti, laborum dignissimos ex praesentium iure ab
+                        deserunt.
+                    </Typography>
+                    <Typography
+                        variant="body2"
+                        component="a"
+                        href={`mailto:${user.email}`}
+                    >
+                        {user.email}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button size="small" onClick={handleClick}>
+                        Edit
+                    </Button>
+                    <Button
+                        size="small"
+                        onClick={() => setDialog(true)}
+                        color="error"
+                    >
+                        Delete
+                    </Button>
+                </CardActions>
+            </Card>
+            <MyDialog
+                open={dialog}
+                setOpen={setDialog}
+                title="Warning"
+                text="Are you sure you want to delete this user?"
+                onConfirm={handleDelete}
             />
-            <CardContent>
-                <Typography
-                    variant="h5"
-                    gutterBottom
-                >{`${user.first_name} ${user.last_name}`}</Typography>
-                <Typography variant="body1" paragraph>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Corrupti corporis ratione totam quae dicta aliquam. Maiores,
-                    quam vel cum beatae a tempora deleniti, laborum dignissimos
-                    ex praesentium iure ab deserunt.
-                </Typography>
-                <Typography
-                    variant="body2"
-                    component="a"
-                    href={`mailto:${user.email}`}
-                >
-                    {user.email}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button size="small" onClick={handleClick}>
-                    Edit
-                </Button>
-                <Button size="small" onClick={handleDelete} color="error">
-                    Delete
-                </Button>
-            </CardActions>
-        </Card>
+        </>
     ) : (
         <Typography variant="h5" color="error">
             An Error Occurred
