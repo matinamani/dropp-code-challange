@@ -4,7 +4,7 @@ export const useLocalStorage = (name, initialValue = undefined) => {
     const [value, setVal] = useState(() => {
         let val = localStorage.getItem(name)
         if (val === 'undefined') val = undefined
-        return JSON.parse(val) || initialValue
+        return val || initialValue
     })
 
     const setValue = (val) => {
